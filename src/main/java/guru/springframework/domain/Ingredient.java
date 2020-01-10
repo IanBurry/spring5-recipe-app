@@ -12,10 +12,10 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
-    // TODO:
-    // private UnitOfMeasure uom;
+    @OneToOne
+    private UnitOfMeasure uom;
 
-    @ManyToMany
+    @ManyToOne
     private Recipe recipe;
 
     public Long getId() {
