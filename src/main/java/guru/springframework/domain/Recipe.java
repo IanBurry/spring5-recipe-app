@@ -18,8 +18,8 @@ public class Recipe {
     private String url;
     private String directions;
 
-    // TODO: this will be an enumeration type
-    //private Difficulty difficulty;
+    @Enumerated(value = EnumType.STRING) // ORDINAL would persist things as integers, which we don't want here
+    private Difficulty difficulty;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") // "recipe" is a property of ingredient here
     private Set<Ingredient> ingredients;
@@ -100,5 +100,29 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
