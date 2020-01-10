@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -18,7 +19,10 @@ public class Recipe {
     private String directions;
 
     // TODO: this will be an enumeration type
-    //private ?? difficulty;
+    //private Difficulty difficulty;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") // "recipe" is a property of ingredient here
+    private Set<Ingredient> ingredients;
 
     @Lob
     private byte[] image;
