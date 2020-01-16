@@ -4,7 +4,6 @@ import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
 
 @Service
 public class RecipeService {
@@ -18,7 +17,8 @@ public class RecipeService {
     }
 
     public Iterable<Recipe> findAll() {
-        return recipeRepository.findAll();
+        Iterable<Recipe> recipes = recipeRepository.findAll();
+        return recipes;
     }
 
     public Recipe findById(Long id) {

@@ -81,7 +81,20 @@ public class DataLoader implements CommandLineRunner {
 
         recipeService.save(guac);
 
-        // Now the taco recipe. Make this as barebones as possible
+        // Now the taco recipe. Make this as barebones as possible: Name, description, category(ies)
+        Recipe tacos = new Recipe();
+        tacos.setName("Spicy Grilled Chicken Tacos");
+        tacos.setDescription("Spicy grilled chicken tacos! Quick marinade, then grill. Ready in about 30 minutes. Great for a quick weeknight dinner, backyard cookouts, and tailgate parties.");
+        tacos.setPrepTime(5);
+        tacos.setCookTime(15);
+        tacos.setDifficulty(Difficulty.MODERATE);
+        Set<Category> tacoCats = new HashSet<>();
+        tacoCats.add(mexican);
+        tacos.setCategories(tacoCats);
+
+        recipeService.save(tacos);
+
+        // and that's all for now
     }
 }
 
