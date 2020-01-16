@@ -64,10 +64,8 @@ public class DataLoader implements CommandLineRunner {
         guacNotes.setRecipeNotes("These are Guacamole recipe notes");
         guacNotes.setRecipe(guac);
         guac.setNotes(guacNotes);
-        Set<Category> guacCategories = new HashSet<>();
-        guacCategories.add(mexican);
-        guacCategories.add(fastFood);
-        guac.setCategories(guacCategories);
+        guac.getCategories().add(mexican);
+        guac.getCategories().add(fastFood);
 
         // now ingredients. Just one for now
         Ingredient guacAvocado = new Ingredient();
@@ -75,9 +73,7 @@ public class DataLoader implements CommandLineRunner {
         guacAvocado.setUom(unitOfMeasureRepository.findByDescription("").get());
         guacAvocado.setDescription("Avocado");
         guacAvocado.setRecipe(guac);
-        Set<Ingredient> guacIngredients = new HashSet<>();
-        guacIngredients.add(guacAvocado);
-        guac.setIngredients(guacIngredients);
+        guac.getIngredients().add(guacAvocado);
 
         recipeService.save(guac);
 
