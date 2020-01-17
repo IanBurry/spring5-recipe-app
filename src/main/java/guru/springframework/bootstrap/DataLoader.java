@@ -37,6 +37,7 @@ public class DataLoader implements CommandLineRunner {
         // get categories and uoms
         Category mexican = categoryRepository.findByDescription("Mexican").get();
         Category fastFood = categoryRepository.findByDescription("Fast Food").get();
+        UnitOfMeasure countUOM = unitOfMeasureRepository.findByDescription("").get();
 
         // create a new Recipe (wow!)
         Recipe guac = new Recipe();
@@ -68,11 +69,7 @@ public class DataLoader implements CommandLineRunner {
         guac.getCategories().add(fastFood);
 
         // now ingredients. Just one for now
-        Ingredient guacAvocado = new Ingredient();
-        guacAvocado.setAmount(BigDecimal.valueOf(2));
-        guacAvocado.setUom(unitOfMeasureRepository.findByDescription("").get());
-        guacAvocado.setDescription("Avocado");
-        guacAvocado.setRecipe(guac);
+        Ingredient guacAvocado = new Ingredient("Avocado", BigDecimal.valueOf(2), countUOM, guac);
         guac.getIngredients().add(guacAvocado);
 
         recipeService.save(guac);
