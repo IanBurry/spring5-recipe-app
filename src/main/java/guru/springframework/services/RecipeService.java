@@ -16,7 +16,8 @@ public class RecipeService {
         this.recipeRepository = recipeRepository;
     }
 
-    public Iterable<Recipe> findAll() {
+    // this only needs to be Iterable. Use abstractions.
+    public Iterable<Recipe> getRecipes() {
         Iterable<Recipe> recipes = recipeRepository.findAll();
         return recipes;
     }
