@@ -59,16 +59,16 @@ public class DataLoader {
                 "\n" +
                 "4 Serve: Serve immediately, or if making a few hours ahead, place plastic wrap on the surface of the guacamole and press down to cover it and to prevent air reaching it. (The oxygen in the air causes oxidation which will turn the guacamole brown.) Refrigerate until ready to serve.\n");
 
+
+
         Notes guacNotes = new Notes();
         guacNotes.setRecipeNotes("These are Guacamole recipe notes");
-        guacNotes.setRecipe(guac);
         guac.setNotes(guacNotes);
         guac.getCategories().add(mexican);
         guac.getCategories().add(fastFood);
 
         // now ingredients. Just one for now
-        Ingredient guacAvocado = new Ingredient("Avocado", BigDecimal.valueOf(2), countUOM, guac);
-        guac.getIngredients().add(guacAvocado);
+        guac.addIngredient(new Ingredient("Avocado", BigDecimal.valueOf(2), countUOM)) ;
 
         recipeService.save(guac);
 

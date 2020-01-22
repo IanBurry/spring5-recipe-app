@@ -1,5 +1,7 @@
 package guru.springframework.domain;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -124,8 +126,9 @@ public class Recipe {
         return notes;
     }
 
-    public void setNotes(Notes notes) {
+    public void setNotes(@NotNull Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);
     }
 
     public Long getId() {
@@ -146,6 +149,12 @@ public class Recipe {
 
     public Set<Ingredient> getIngredients() {
         return ingredients;
+    }
+
+    public Recipe addIngredient(Ingredient ingredient) {
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+        return this;
     }
 
     public void setIngredients(Set<Ingredient> ingredients) {
