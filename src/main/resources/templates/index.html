@@ -3,8 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Recipe Index</title>
+    <style>
+        body {
+            font-family: sans serif;
+        }
+        li {
+            margin-bottom:20px;
+        }
+        div {
+            margin-bottom: 4px;
+        }
+        .description {
+            padding: 5px;
+        }
+        .difficulty {
+
+        }
+    </style>
 </head>
 <body>
-    <h1 th:text="'Recipe Index Page'">Place Holder</h1>
+    <ol>
+        <li th:each="recipe : ${recipes}">
+            <div style="font-weight:bold" th:text="${recipe.name}"></div>
+            <div class="description" th:text="${recipe.description}"></div>
+            <div>
+                <span style="font-weight:bold">Difficulty: </span>
+                <span th:text="${recipe.difficulty}"></span>
+            </div>
+            <div>
+                <span style="font-weight:bold">Categories:</span>
+                <span th:each="category : ${recipe.categories}">
+                    <span style="margin-right:6px;" th:text="${category.description}"></span>
+                </span>
+            </div>
+        </li>
+    </ol>
 </body>
 </html>
