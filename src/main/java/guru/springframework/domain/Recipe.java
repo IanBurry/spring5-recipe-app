@@ -1,7 +1,5 @@
 package guru.springframework.domain;
 
-import org.jetbrains.annotations.NotNull;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -126,7 +124,7 @@ public class Recipe {
         return notes;
     }
 
-    public void setNotes(@NotNull Notes notes) {
+    public void setNotes(Notes notes) {
         this.notes = notes;
         notes.setRecipe(this);
     }
