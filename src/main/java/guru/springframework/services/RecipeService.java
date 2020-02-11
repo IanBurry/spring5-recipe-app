@@ -2,9 +2,10 @@ package guru.springframework.services;
 
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-
+@Slf4j
 @Service
 public class RecipeService {
     // this is all gonna be very basic now
@@ -18,6 +19,7 @@ public class RecipeService {
 
     // this only needs to be Iterable. Use abstractions.
     public Iterable<Recipe> getRecipes() {
+        log.debug("Gettin' me some hot, iterable recipe action...");
         Iterable<Recipe> recipes = recipeRepository.findAll();
         return recipes;
     }
