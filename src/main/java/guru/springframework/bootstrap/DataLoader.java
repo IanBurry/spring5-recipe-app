@@ -4,6 +4,7 @@ import guru.springframework.domain.*;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import guru.springframework.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@Slf4j
 @Component
 public class DataLoader {
 
@@ -30,6 +31,7 @@ public class DataLoader {
 
     @EventListener
     private void handleContextRefresh(ContextRefreshedEvent event) {
+        log.debug("Loading dev data...");
         System.out.println("Loading dev data...");
 
         // get categories and uoms
@@ -87,6 +89,8 @@ public class DataLoader {
 
         // and that's all for now
     }
+
+
 }
 
 //    2 ripe avocados
