@@ -3,40 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Recipe Index</title>
-    <style>
-        body {
-            font-family: sans serif;
-        }
-        li {
-            margin-bottom:20px;
-        }
-        div {
-            margin-bottom: 4px;
-        }
-        .description {
-            padding: 5px;
-        }
-        .difficulty {
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+          crossorigin="anonymous">
 
-        }
-    </style>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-    <ol>
-        <li th:each="recipe : ${recipes}">
-            <div style="font-weight:bold" th:text="${recipe.name}"></div>
-            <div class="description" th:text="${recipe.description}"></div>
-            <div>
-                <span style="font-weight:bold">Difficulty: </span>
-                <span th:text="${recipe.difficulty}"></span>
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title">My Recipes</span>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
+                        <table class="table table-hover">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="recipe : ${recipes}">
+                                    <td th:text="${recipe.id}"></td>
+                                    <td th:text="${recipe.name}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div>
-                <span style="font-weight:bold">Categories:</span>
-                <span th:each="category : ${recipe.categories}">
-                    <span style="margin-right:6px;" th:text="${category.description}"></span>
-                </span>
-            </div>
-        </li>
-    </ol>
+        </div>
+    </div>
+</div>
 </body>
 </html>
