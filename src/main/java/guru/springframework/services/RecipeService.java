@@ -5,23 +5,24 @@ import guru.springframework.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Slf4j
 @Service
-public class RecipeService {
-    // this is all gonna be very basic now
-    // for ex. there are no real sanity checks
-
+public class RecipeService implements RecipeServiceable {
     private final RecipeRepository recipeRepository;
 
     public RecipeService(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
 
-    // this only needs to be Iterable. Use abstractions.
-    public Iterable<Recipe> getRecipes() {
-        log.debug("Gettin' me some hot, iterable recipe action...");
-        Iterable<Recipe> recipes = recipeRepository.findAll();
-        return recipes;
+    public Set<Recipe> getRecipes() {
+        log.debug("I'm in the service");
+
+        Set<Recipe> recipeSet = new HashSet<>();
+        recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
+        return recipeSet;
     }
 
     public Recipe findById(Long id) {
