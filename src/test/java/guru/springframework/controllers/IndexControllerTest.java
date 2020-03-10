@@ -1,15 +1,11 @@
 package guru.springframework.controllers;
 
-import guru.springframework.domain.Recipe;
 import guru.springframework.services.RecipeService;
-import org.h2.index.Index;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
-
-import java.util.HashSet;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -32,17 +28,13 @@ public class IndexControllerTest {
 
     @Test
     public void getIndexPage() {
-        // mock Service and Model
-        Recipe recipe = new Recipe();
-        HashSet<Recipe> recipesData = new HashSet<>();
-        recipesData.add(recipe);
-        when(recipeService.getRecipes()).thenReturn(recipesData);
-
         // assert that the method returns the correct string ("index")
         assertEquals("index", indexController.getIndexPage(model));
 
         // verify interaction with mocks
         verify(recipeService, times(1)).getRecipes();
-        verify(model, times(1)).addAttribute("recipes", recipesData);
+
+        // this avoids the recipe code. Just have to use a matcher with anySet() instead of raw string
+        verify(model, times(1)).addAttribute(eq("recipes"), anySet());
     }
 }
