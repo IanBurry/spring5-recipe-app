@@ -72,6 +72,9 @@ public class DataLoader {
         // now ingredients. Just one for now
         guac.addIngredient(new Ingredient("Avocado", BigDecimal.valueOf(2), countUOM)) ;
 
+        HashSet<Ingredient> guacIngredients = new HashSet<>();
+
+
         recipeService.save(guac);
 
         // Now the taco recipe. Make this as barebones as possible: Name, description, category(ies)
