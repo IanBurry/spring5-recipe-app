@@ -26,7 +26,7 @@ public class RecipeService implements RecipeServiceable {
     }
 
     public Recipe findById(Long id) {
-        return recipeRepository.findById(id).get();
+        return recipeRepository.findById(id).orElse(null);
     }
 
     public Recipe save(Recipe object) {
