@@ -10,6 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +38,11 @@ public class DataLoader {
         // get categories and uoms
         Category mexican = categoryRepository.findByDescription("Mexican").get();
         Category fastFood = categoryRepository.findByDescription("Fast Food").get();
-        UnitOfMeasure countUOM = unitOfMeasureRepository.findByDescription("").get();
+        UnitOfMeasure each = unitOfMeasureRepository.findByDescription("Each").get();
+        UnitOfMeasure teaspoon = unitOfMeasureRepository.findByDescription("Teaspoon").get();
+        UnitOfMeasure tablespoon = unitOfMeasureRepository.findByDescription("Tablespoon").get();
+        UnitOfMeasure dash = unitOfMeasureRepository.findByDescription("Dash").get();
+
 
         // create a new Recipe (wow!)
         Recipe guac = new Recipe();
@@ -46,7 +51,7 @@ public class DataLoader {
         guac.setPrepTime(7);
         guac.setServings(4);
         guac.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
-        guac.setSource("Guacamole recipe source. Whatever that is.");
+        guac.setSource("Simply Recipes");
         guac.setDescription("The best guacamole keeps it simple: just ripe avocados, salt, a squeeze of lime, onions, chiles, cilantro, and some chopped tomato. Serve it as a dip at your next party or spoon it on top of tacos for an easy dinner upgrade. ");
         guac.setDifficulty(Difficulty.EASY);
         guac.setDirections("1 Cut the avocado, remove flesh: Cut the avocados in half. Remove the pit. Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon. (See How to Cut and Peel an Avocado.) Place in a bowl.\n" +
@@ -70,9 +75,21 @@ public class DataLoader {
         guac.getCategories().add(fastFood);
 
         // now ingredients. Just one for now
-        guac.addIngredient(new Ingredient("Avocado", BigDecimal.valueOf(2), countUOM)) ;
+        guac.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), each)) ;
+        guac.addIngredient(new Ingredient("salt", new BigDecimal(0.25), teaspoon));
+        guac.addIngredient(new Ingredient("lime juice", new BigDecimal(1), tablespoon));
+        guac.addIngredient(new Ingredient("onion", new BigDecimal(2), tablespoon));
 
-        HashSet<Ingredient> guacIngredients = new HashSet<>();
+        //    2 ripe avocados
+//    1/4 teaspoon of salt, more to taste
+//    1 tablespoon fresh lime juice or lemon juice
+//    2 tablespoons to 1/4 cup of minced red onion or thinly sliced green onion
+//    1-2 serrano chiles, stems and seeds removed, minced
+//    2 tablespoons cilantro (leaves and tender stems), finely chopped
+//    A dash of freshly grated black pepper
+//    1/2 ripe tomato, seeds and pulp removed, chopped
+//    Red radishes or jicama, to garnish
+//    Tortilla chips, to serve
 
 
         recipeService.save(guac);
@@ -96,13 +113,4 @@ public class DataLoader {
 
 }
 
-//    2 ripe avocados
-//    1/4 teaspoon of salt, more to taste
-//    1 tablespoon fresh lime juice or lemon juice
-//    2 tablespoons to 1/4 cup of minced red onion or thinly sliced green onion
-//    1-2 serrano chiles, stems and seeds removed, minced
-//    2 tablespoons cilantro (leaves and tender stems), finely chopped
-//    A dash of freshly grated black pepper
-//    1/2 ripe tomato, seeds and pulp removed, chopped
-//    Red radishes or jicama, to garnish
-//    Tortilla chips, to serve
+

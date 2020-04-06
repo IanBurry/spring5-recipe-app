@@ -17,10 +17,6 @@
             crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 
     <style>
-        .row mark {
-            font-weight: bold;
-            background: inherit;
-         }
         .row p {
             padding: 5x;
             overflow: hidden;
@@ -33,18 +29,26 @@
     </style>
 </head>
 <body>
+<!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="pannel-group">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title" th:text="${recipe.description}">Recipe Description Here!</h1>
+                        <h1 class="panel-title" th:text="${recipe.name}">Recipe Name</h1>
                     </div>
                     <div class="panel-body">
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="well well-sm" th:text="${recipe.description}">
+                                    Description
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-3">
-                                <mark>Categories:</mark>
+                                <strong>Categories:</strong>
                             </div>
                             <div class="col-md-9">
                                 <ul>
@@ -54,13 +58,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <mark>Prep Time:</mark>
+                                <strong>Prep Time:</strong>
                             </div>
                             <div class="col-md-3">
                                 <p th:text="${recipe.prepTime} + ' min'">Prep Time</p>
                             </div>
                             <div class="col-md-3">
-                                <mark>Difficulty:</mark>
+                                <strong>Difficulty:</strong>
                             </div>
                             <div class="col-md-3">
                                 <p th:text="${recipe.difficulty.toString().toLowerCase()}" style="text-transform: capitalize">Difficulty</p>
@@ -68,13 +72,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <mark>Cooktime:</mark>
+                                <strong>Cooktime:</strong>
                             </div>
                             <div class="col-md-3">
                                 <p th:text="${recipe.cookTime} + ' min'">Cook Time</p>
                             </div>
                             <div class="col-md-3">
-                                <mark>Servings:</mark>
+                                <strong>Servings:</strong>
                             </div>
                             <div class="col-md-3">
                                 <p th:text="${recipe.servings}">Servings</p>
@@ -82,13 +86,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-3">
-                                <mark>Source:</mark>
+                                <strong>Source:</strong>
                             </div>
                             <div class="col-md-3">
-                                <p>30 min</p>
+                                <p th:text="${recipe.source}">Source</p>
                             </div>
                             <div class="col-md-3">
-                                <mark>URL:</mark>
+                                <strong>URL:</strong>
                             </div>
                             <div class="col-md-3">
                                 <p th:text="${recipe.url}" th:title="${recipe.url}" style="white-space: nowrap">URL</p>
@@ -104,7 +108,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <ul>
-                                    <li th:each="ingredient : ${recipe.ingredients}"><span th:text="${ingredient.amount} + ${ingredient.uom.description} + ' of ' + ${ingredient.description}">Ingredient</span></li>
+                                    <li th:each="ingredient : ${recipe.ingredients}">
+                                        <span th:text="${ingredient.amount} + ' ' + ${ingredient.uom.description} + ' ' + ${ingredient.description}">Ingredient</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -118,7 +123,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- utext is vulnerable to XSS attacks. Of course, character data should be sanitized prior to storage -->
-                                <p th:utext="${#strings.replace( #strings.escapeXml( recipe.directions ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}">Description</p>
+                                <p th:utext="${#strings.replace( #strings.escapeXml( recipe.directions ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}">Directions</p>
                             </div>
                         </div>
                     </div>
