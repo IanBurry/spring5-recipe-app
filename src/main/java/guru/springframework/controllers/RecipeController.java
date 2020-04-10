@@ -33,4 +33,12 @@ public class RecipeController {
 
         return "recipe/show";
     }
+
+    @RequestMapping("/recipe/new")
+    public String newRecipe(Model model) {
+        Recipe recipe = new Recipe();
+        model.addAttribute("recipe", recipe);
+
+        return "recipe/recipeform";
+    }
 }
