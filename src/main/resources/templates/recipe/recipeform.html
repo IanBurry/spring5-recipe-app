@@ -31,9 +31,15 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-3 form-group">
-                                    <label>Recipe Description:</label>
-                                    <input type="text" class="form-control" th:field="*{description}"/>
+                                    <label>Recipe Name:</label>
+                                    <input type="text" class="form-control" th:field="*{name}" />
                                 </div>
+                            </div>
+                            <div class="row">
+                            </div>
+                            <div class="col-md-12 form-group" style="padding-left:0">
+                                <label>Recipe Description:</label>
+                                <textarea rows="3" class="form-control" th:field="*{description}"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-md-3 form-group">
@@ -133,6 +139,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12 form-group">
+                                    <input type="hidden" th:attr="name=#{notes.recipe},value=#{recipe}"/>
                                     <textarea class="form-control" rows="3" th:field="*{notes.recipeNotes}"></textarea>
                                 </div>
                             </div>
