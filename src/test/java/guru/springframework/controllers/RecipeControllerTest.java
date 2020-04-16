@@ -7,16 +7,18 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
 public class RecipeControllerTest {
 
@@ -29,10 +31,13 @@ public class RecipeControllerTest {
     @InjectMocks
     RecipeController recipeController;
 
+    MockMvc theMockMvc;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         recipeController = new RecipeController(recipeService);
+        theMockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
     }
 
     @Test
@@ -45,10 +50,37 @@ public class RecipeControllerTest {
 
         String requestString = "/recipe/" + recipeId;
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
-        mockMvc.perform(MockMvcRequestBuilders.get(requestString))
+        mockMvc.perform(get(requestString))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"));
 
         verify(recipeService).findById(recipeId);
     }
+
+    @Test
+    public void showNewRecipeForm() throws Exception {
+        String requestString = "/recipe/new";
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc.perform(get(requestString))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/recipeform"))
+                .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
+    public void processNewRecipePost() throws Exception {
+        String postRequest = "/recipe";
+        Recipe newRecipe = new Recipe();
+        newRecipe.setId(2L);
+        newRecipe.setName("Test Recipe");
+        String viewName = "redirect:/recipe/show/" + newRecipe.getId();
+
+        when(recipeService.save(any())).thenReturn(newRecipe);
+
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc.perform(post(postRequest).param("name", "Test Recipe"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name(viewName));
+    }
+
 }
