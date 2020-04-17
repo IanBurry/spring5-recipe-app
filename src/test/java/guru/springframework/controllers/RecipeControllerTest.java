@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -41,7 +42,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void showRecipe() throws Exception {
+    public void testShowRecipe() throws Exception {
         Long recipeId = 1L;
         Recipe recipe = new Recipe();
         recipe.setId(recipeId);
@@ -58,7 +59,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void showNewRecipeForm() throws Exception {
+    public void testShowNewRecipeForm() throws Exception {
         String requestString = "/recipe/new";
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
         mockMvc.perform(get(requestString))
@@ -68,7 +69,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void processNewRecipePost() throws Exception {
+    public void testPostNewRecipe() throws Exception {
         String postRequest = "/recipe";
         Recipe newRecipe = new Recipe();
         newRecipe.setId(2L);
@@ -78,9 +79,26 @@ public class RecipeControllerTest {
         when(recipeService.save(any())).thenReturn(newRecipe);
 
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
-        mockMvc.perform(post(postRequest).param("name", "Test Recipe"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name(viewName));
+        mockMvc.perform(post(postRequest)
+                .param("name", "Test Recipe")
+                .contentType(MediaType.MULTIPART_FORM_DATA))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(view().name(viewName));
+    }
+
+    @Test
+    public void testShowUpdateRecipeForm() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        recipe.setName("Test Update Recipe");
+        String getRequest = "/recipe/update/" + recipe.getId();
+
+        when(recipeService.findById(anyLong())).thenReturn(recipe);
+
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc.perform(get(getRequest))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/recipeform"));
     }
 
 }
